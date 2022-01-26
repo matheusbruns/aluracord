@@ -71,7 +71,6 @@ export default function PaginaInicial() {
               // trocar de pagina
               // window.location.href = '/chat'
               roteamento.push('/chat')
-
             }}
             styleSheet={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
@@ -83,20 +82,9 @@ export default function PaginaInicial() {
               {appConfig.name}
             </Text>
 
-            {/* {<input 
-              type="text" 
-              value={username}
-              onChange={function(event){
-                console.log(event);
-                // onde está o valor?
-                const valor = event.target.value;
-                // trocar o valor da variável
-                // através do React e avise quem precisa
-                setUsername(valor);
-              }}
-            />} */}
             <TextField
             value={username}
+            placeholder='Insira o seu Github user'
             onChange={function(event){
               // onde está o valor?
               const valor = event.target.value;

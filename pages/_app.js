@@ -30,10 +30,8 @@ function GlobalStyle() {
 }
 
 export default function CustomApp({ Component, pageProps}) {
-  console.log('em todas as páginas')
   return (
     <>
-    
     <GlobalStyle />
     <Component {...pageProps} />
     </>

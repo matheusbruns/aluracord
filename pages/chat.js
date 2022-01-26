@@ -53,6 +53,7 @@ export default function ChatPage() {
                     maxWidth: '95%',
                     maxHeight: '95vh',
                     padding: '32px',
+                    
                 }}
             >
                 <Header />
@@ -66,6 +67,7 @@ export default function ChatPage() {
                         flexDirection: 'column',
                         borderRadius: '5px',
                         padding: '16px',
+                        
                       
                     }}
                     
@@ -104,11 +106,31 @@ export default function ChatPage() {
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
-                                padding: '6px 8px',
+                                padding: '2px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
                             }}
+                        />
+                        <Button
+                          onKeyPress={(event) => { // quando clicar no enter, limpar a variavel
+                              if (event.key === 'Enter') {
+                                  event.preventDefault();
+                                  handleNovaMensagem(mensagem);
+                              }
+                          }}
+                          variant='tertiary'
+                          colorVariant='dark'
+                          label='Enviar'
+
+                          styleSheet={{
+                            marginTop:'-8px',
+                            borderRadius: '5px',
+                            padding: '10px 8px',
+                            backgroundColor: appConfig.theme.colors.primary[500],
+                            color: appConfig.theme.colors.neutrals[200],
+                            cursor:'pointer',
+                        }}
                         />
                     </Box>
                 </Box>
@@ -116,6 +138,7 @@ export default function ChatPage() {
         </Box>
     )
 }
+
 
 function Header() {
     return (
@@ -147,6 +170,7 @@ function MessageList(props) {
                 flex: 1,
                 color: appConfig.theme.colors.neutrals["000"],
                 marginBottom: '16px',
+                overflow: 'auto',
             }}
         >
             {props.mensagens.map((mensagem) => {
