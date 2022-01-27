@@ -35,7 +35,7 @@ function Titulo(props) {
 
 export default function PaginaInicial() {
   //const username = 'matheusbruns';
-  const [username, setUsername] = React.useState('');
+  const [username, setUsername] = React.useState('matheusbruns');
   const roteamento = useRouter();
 
   return (
@@ -92,7 +92,7 @@ export default function PaginaInicial() {
               // através do React e avise quem precisa
               setUsername(valor);
             }}
-
+            
               fullWidth
               textFieldColors={{
                 neutral: {
