@@ -1,7 +1,9 @@
 import { Box, Text, TextField, Image, Button } from '@skynexui/components';
 import React from 'react';
 import appConfig from '../config.json';
-import { createClient } from '@supabase/supabase-js'
+import { useRouter } from 'next/router';
+import { createClient } from '@supabase/supabase-js';
+import { ButtonSendSticker } from '../src/components/ButtonSendSticker'
 
 
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzI5MzIyOSwiZXhwIjoxOTU4ODY5MjI5fQ.-cjwp3EK2xu71Fydc7MnLNWswKLgRwaYwHa-ziaYYHs';
@@ -10,6 +12,8 @@ const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 
 export default function ChatPage() {
+    const roteamento = useRouter();
+    const usuarioLogado = roteamento.query.username; // pega o nome do usuario pela URL
     const [mensagem, setMensagem] = React.useState('');
     const [listaDeMensagens, setListaDeMensagens] = React.useState([]);
 
@@ -27,7 +31,7 @@ export default function ChatPage() {
     function handleNovaMensagem(novaMensagem) {
         const mensagem = {
             //id: listaDeMensagens.length + 1,
-            de: 'matheusbruns',
+            de: usuarioLogado,
             texto: novaMensagem,
         };
 
@@ -126,6 +130,13 @@ export default function ChatPage() {
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
+                            }}
+                        />
+                        {/* CallBack */}
+                        <ButtonSendSticker
+                            onStickerClick={(sticker) =>{
+                                console.log('salva esse sticker no banco');
+                                handleNovaMensagem(':sticker: ' + sticker);
                             }}
                         />
                         {/* <Button
@@ -232,7 +243,13 @@ function MessageList(props) {
                                 {(new Date().toLocaleDateString())}
                             </Text>
                         </Box>
-                        {mensagem.texto}
+                        {mensagem.texto.startsWith(':sticker:')
+                            ? (
+                                <Image src={mensagem.texto.replace(':sticker:', '')} />
+                            )
+                            : (
+                                mensagem.texto
+                        )}
                     </Text>
                 );
             })}

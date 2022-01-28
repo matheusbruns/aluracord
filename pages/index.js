@@ -70,7 +70,7 @@ export default function PaginaInicial() {
               infosDoEvento.preventDefault(); // faz parar de recarregar a página quando clicar no botao
               // trocar de pagina
               // window.location.href = '/chat'
-              roteamento.push('/chat')
+              roteamento.push(`/chat?username=${username}`);
             }}
             styleSheet={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
