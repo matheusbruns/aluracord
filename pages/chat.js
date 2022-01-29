@@ -5,6 +5,13 @@ import { useRouter } from 'next/router';
 import { createClient } from '@supabase/supabase-js';
 import { ButtonSendSticker } from '../src/components/ButtonSendSticker'
 
+function escutaMensagensEmTempoReal(adicionaMensagem){
+    return supabaseClient
+    .from('mensagens')
+    .on('INSERT', ({ respostaLive }) => {
+        adicionaMensagem(respostaLive.new);
+    });
+}
 
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzI5MzIyOSwiZXhwIjoxOTU4ODY5MjI5fQ.-cjwp3EK2xu71Fydc7MnLNWswKLgRwaYwHa-ziaYYHs';
 const SUPABASE_URL = 'https://wcdwgthihwwjfxthaanu.supabase.co';
@@ -26,6 +33,15 @@ export default function ChatPage() {
                 console.log(`dados da consulta: ${data}`);
                 setListaDeMensagens(data);
             });
+            escutaMensagensEmTempoReal((novaMensagem) => {
+                // handleNovaMensagem(novaMensagem)
+                setListaDeMensagens((valorAtualDaLista) => {
+                    return [
+                        novaMensagem,
+                        ...valorAtualDaLista,
+                    ]
+                });
+            });
     }, [listaDeMensagens]);
 
     function handleNovaMensagem(novaMensagem) {
@@ -42,10 +58,6 @@ export default function ChatPage() {
             ])
             .then(({ data }) => {
                 console.log(data)
-                setListaDeMensagens([
-                    data[0],
-                    ...listaDeMensagens,
-                ]);
             })
         
         setMensagem('');
@@ -132,33 +144,33 @@ export default function ChatPage() {
                                 color: appConfig.theme.colors.neutrals[200],
                             }}
                         />
-                        {/* CallBack */}
-                        <ButtonSendSticker
-                            onStickerClick={(sticker) =>{
-                                console.log('salva esse sticker no banco');
-                                handleNovaMensagem(':sticker: ' + sticker);
-                            }}
-                        />
                         {/* <Button
                           onKeyPress={(event) => {
-                              if (event.key === 'Enter') {
                                   event.preventDefault();
                                   handleNovaMensagem(mensagem);
-                              }
                           }}
                           variant='tertiary'
                           colorVariant='dark'
-                          label='Enviar'
-
+                          label='Send'
                           styleSheet={{
                             marginTop:'-8px',
+                            marginRight:'10px',
+                            marginLeft:'-5px',
                             borderRadius: '5px',
                             padding: '10px 8px',
-                            backgroundColor: appConfig.theme.colors.primary[500],
-                            color: appConfig.theme.colors.neutrals[200],
+                            backgroundColor: appConfig.theme.colors.neutrals[400],
+                            color: appConfig.theme.colors.neutrals[100],
                             cursor:'pointer',
                         }}
                         /> */}
+                        {/* CallBack */}
+                        <ButtonSendSticker
+                            onStickerClick={(sticker) =>{
+                                //console.log('salva esse sticker no banco');
+                                handleNovaMensagem(':sticker: ' + sticker);
+                            }}
+                        />
+                        
                     </Box>
                 </Box>
             </Box>
@@ -245,7 +257,15 @@ function MessageList(props) {
                         </Box>
                         {mensagem.texto.startsWith(':sticker:')
                             ? (
-                                <Image src={mensagem.texto.replace(':sticker:', '')} />
+                                <Image src={mensagem.texto.replace(':sticker:', '')} 
+                                
+                                styleSheet={{
+                                    width: {
+                                        xs: '200px',
+                                        sm: '250px',
+                                    },
+                                }}
+                                />
                             )
                             : (
                                 mensagem.texto

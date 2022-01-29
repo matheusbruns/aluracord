@@ -24,12 +24,11 @@ export function ButtonSendSticker(props) {
           alignItems: 'center',
           justifyContent: 'center',
           backgroundColor: appConfig.theme.colors.primary[500],
-          filter: isOpen ? 'grayscale(0)' : 'grayscale(1)',
           hover: {
-            filter: 'grayscale(0)',
+            backgroundColor: appConfig.theme.colors.primary[400],
           }
         }}
-        label="😋"
+        label="GIF"
         onClick={() => setOpenState(!isOpen)}
       />
       {isOpen && (   //esse é o jeito de escrever um if no react
@@ -68,7 +67,7 @@ export function ButtonSendSticker(props) {
               justifyContent: 'space-between',
               flex: 1,
               paddingTop: '16px',
-              overflow: 'scroll',
+              overflow: 'auto',
             }}
           >
             {appConfig.stickers.map((sticker) => (
