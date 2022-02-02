@@ -4,9 +4,8 @@ Projeto criado na imersão React com a Alura, o projeto se baseia em um discord,
 
 ## 🚀 Tecnologias envolvidas
 
-- ReactJS
-- NextJS
-- MaterialUI
-- HTML5
-- CSS3
-- Supabase
+- [ReactJS](https://pt-br.reactjs.org/)
+- [NextJS](https://nextjs.org/)
+- [skynexui](https://storybook.skynexui.dev/?path=/story/introduction--page)
+- [CSS3](https://developer.mozilla.org/pt-BR/docs/Web/CSS)
+- [Supabase](https://supabase.com/)
