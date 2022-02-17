@@ -1,5 +1,3 @@
-// Tudo que estiver aqui vai aparecer em todas as paginas
-
 function GlobalStyle() {
   return (
     <style global jsx>{`
